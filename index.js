@@ -1,3 +1,4 @@
+const cluster = require('cluster');
 const express = require('express');
 const app = express();
 
@@ -6,9 +7,15 @@ function doWork(duration) {
     while (Date.now() - start < duration) {}
 }
 
-app.get('/', (req, res) => {
-    doWork(5000);
-    res.send("Hi there!");
-});
+if (cluster.isMaster) {
+    console.log('Master process');
+    cluster.fork()
+} else {
+    console.log('Child process')
+    app.get('/', (req, res) => {
+        doWork(5000);
+        res.send("Hi there! Katarina");
+    });
 
-app.listen(3000);
+    app.listen(3000);
+}
