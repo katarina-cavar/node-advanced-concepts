@@ -1,7 +1,7 @@
 const https = require('https');
 const crypto = require('crypto');
 const fs = require('fs');
-
+process.env.UV_THREADPOOL_SIZE = 1;
 const start = Date.now();
 
 function doRequest() {
@@ -24,7 +24,7 @@ fs.readFile('multitask.js', 'utf-8', () => {
     console.log('FS: ', Date.now() - start);
 });
 
-// doHash();
-// doHash();
-// doHash();
-// doHash();
+doHash();
+doHash();
+doHash();
+doHash();

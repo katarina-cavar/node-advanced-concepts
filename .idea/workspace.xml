@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76bc57e8-2b00-4924-bee6-647ec2c51460" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/multitask.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multitask.js" beforeDir="false" afterPath="$PROJECT_DIR$/multitask.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,7 @@
       <workItem from="1695992444957" duration="303000" />
       <workItem from="1696232266075" duration="620000" />
       <workItem from="1696320633480" duration="600000" />
-      <workItem from="1696414156057" duration="4681000" />
+      <workItem from="1696414156057" duration="5424000" />
     </task>
     <servers />
   </component>
