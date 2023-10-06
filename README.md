@@ -17,3 +17,7 @@ Udemy course: NodeJS Advanced Concepts https://www.udemy.com/course/advanced-nod
 - `pm2 monit`
   - dashboard where we can scroll through processes
   - CTRL + C to stop this dashboard
+
+**Lesson 34**
+- worker threads are now considered stable
+- checkout an example here: https://www.udemy.com/course/advanced-node-for-developers/learn/lecture/9646770#questions/16733352

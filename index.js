@@ -3,29 +3,30 @@ const cluster = require('cluster');
 const express = require('express');
 const crypto = require('crypto');
 
-console.log(cluster.isMaster);
+const app = express();
+const Worker = require('webworker-threads').Worker;
 
-// is the file being executed in master mode?
-if (cluster.isMaster) {
-    // cause index.js to be executed *again* but in child mode
-    cluster.fork();
-    cluster.fork();
-    cluster.fork();
-    cluster.fork();
-} else {
-    // I'm a child, I'm going to act like a server and do nothing else
-    const express = require('express');
-    const app = express();
+app.get('/', (req, res) => {
+    const worker = new Worker(function () {
+        this.onmessage = function () {
+            let counter = 0;
+            while (counter < 1e9) {
+                counter++;
+            }
 
-    app.get('/', (req, res) => {
-        crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
-            res.send('Hi there');
-        });
+            postMessage(counter);
+        }
     });
 
-    app.get('/fast', (req, res) => {
-        res.send('Whoa! That was fast!');
-    });
+    worker.onmessage = function (myCounter) {
+        console.log(myCounter)
+    }
 
-    app.listen(3000);
-}
+    worker.postMessage();
+});
+
+app.get('/fast', (req, res) => {
+    res.send('Whoa! That was fast!');
+});
+
+app.listen(3000);
