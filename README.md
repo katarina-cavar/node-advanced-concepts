@@ -1,23 +1,12 @@
-# node-advanced-concepts
-Udemy course: NodeJS Advanced Concepts https://www.udemy.com/course/advanced-node-for-developers/
+# AdvancedNodeStarter
+Starting project for a course on Advanced Node @ Udemy
 
+### Setup
 
-### Lessons
+- Run `npm install` in the root of the project to install server dependencies
+- Change into the client directory and run `npm install --legacy-peer-deps`
+- Change back into the root of the project and run `npm run dev` to start the server
+- Access the application at `localhost:3000` in your browser
 
-**Lesson 33: PM2 Configuration**
-- `pm2 start index.js -i 0`
-  - `-i 0` - I don't know how many threads I want, you figure it out
-  - start index processes
-- `pm2 delete index`
-  - delete all children connected to index
-- `pm2 list`
-  - summary of health of instances
-- `pm2 show index`
-  - detailed info about 'index'
-- `pm2 monit`
-  - dashboard where we can scroll through processes
-  - CTRL + C to stop this dashboard
-
-**Lesson 34**
-- worker threads are now considered stable
-- checkout an example here: https://www.udemy.com/course/advanced-node-for-developers/learn/lecture/9646770#questions/16733352
+**Important:**
+The credentials for the Mongo Atlas DB in `dev.js` are read only. If you attempt to log in without first adding your own connection string (covered later in the course) you will see an error: `[0] MongoError: user is not allowed to do action [insert] on [advnode.users]`

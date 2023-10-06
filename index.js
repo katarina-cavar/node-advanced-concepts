@@ -1,32 +1,45 @@
-process.env.UV_THREADPOOL_SIZE = 1;
-const cluster = require('cluster');
 const express = require('express');
-const crypto = require('crypto');
+const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const bodyParser = require('body-parser');
+const keys = require('./config/keys');
+
+require('./models/User');
+require('./models/Blog');
+require('./services/passport');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
-const Worker = require('webworker-threads').Worker;
 
-app.get('/', (req, res) => {
-    const worker = new Worker(function () {
-        this.onmessage = function () {
-            let counter = 0;
-            while (counter < 1e9) {
-                counter++;
-            }
+app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-            postMessage(counter);
-        }
-    });
+require('./routes/authRoutes')(app);
+require('./routes/blogRoutes')(app);
 
-    worker.onmessage = function (myCounter) {
-        console.log(myCounter)
-    }
+if (['production'].includes(process.env.NODE_ENV)) {
+  app.use(express.static('client/build'));
 
-    worker.postMessage();
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve('client', 'build', 'index.html'));
+  });
+}
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Listening on port`, PORT);
 });
-
-app.get('/fast', (req, res) => {
-    res.send('Whoa! That was fast!');
-});
-
-app.listen(3000);
